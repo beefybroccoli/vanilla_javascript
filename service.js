@@ -5,14 +5,30 @@ You have full freedom in how you accomplish the above objectives. You also have 
 */
 
 const API = "https://jsonplaceholder.typicode.com";
-document.getElementsByTagName("button")[0].onclick = function () {
-  let users = null;
+const PATH_USERS = "/users";
+
+async function getData(path) {
+  return await fetch(API + path)
+    .then((response) => response.json())
+    .then((json) => {
+      return json;
+    })
+    .catch((err) => {
+      console.log(err);
+      return "error path " + path;
+    });
+}
+document.getElementsByTagName("button")[0].onclick = async function () {
+  let users = await getData(PATH_USERS);
+  localStorage.setItem("users", JSON.stringify(users));
+  //---------------------------
 
   fetch(API + "/users")
     .then((response) => response.json())
     .then((json) => console.log(json))
     .catch((err) => console.log(err));
 
+  //---------------------
   // fetch(API + "/users");
   //     .then((response) => {
   //       console.log(response.json());
