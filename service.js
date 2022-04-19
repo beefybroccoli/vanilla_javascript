@@ -16,7 +16,7 @@ async function getData(path) {
     })
     .catch((err) => {
       console.log(err);
-      return "error path " + path;
+      return "error";
     });
 }
 
