@@ -6,6 +6,7 @@ You have full freedom in how you accomplish the above objectives. You also have 
 
 const API = "https://jsonplaceholder.typicode.com";
 const PATH_USERS = "/users";
+const PATH_POSTS = "/posts";
 
 async function getData(path) {
   return await fetch(API + path)
@@ -18,24 +19,15 @@ async function getData(path) {
       return "error path " + path;
     });
 }
-document.getElementsByTagName("button")[0].onclick = async function () {
+
+async function getDataFromAPI() {
   let users = await getData(PATH_USERS);
   localStorage.setItem("users", JSON.stringify(users));
-  //---------------------------
 
-  fetch(API + "/users")
-    .then((response) => response.json())
-    .then((json) => console.log(json))
-    .catch((err) => console.log(err));
+  let posts = await getData(PATH_POSTS);
+  localStorage.setItem("posts", JSON.stringify(posts));
+}
 
-  //---------------------
-  // fetch(API + "/users");
-  //     .then((response) => {
-  //       console.log(response.json());
-  //       console.log(response.json());
-  //       users = response.json();
-  //       console.log("users = ", users);
-  //     })
-  //     .catch((err) => console.log(err));
-  //   console.log("users = ", users);
+document.getElementById("getData").onclick = async function () {
+  await getDataFromAPI();
 };
