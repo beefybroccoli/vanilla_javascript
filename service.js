@@ -26,6 +26,43 @@ async function getDataFromAPI() {
 
   let posts = await getData(PATH_POSTS);
   localStorage.setItem("posts", JSON.stringify(posts));
+
+  addUsersToTable();
+  addPostsToTable();
+}
+function addUsersToTable() {
+  let users = JSON.parse(localStorage.getItem("users"));
+  let tBodyRef = document
+    .getElementById("tableUsers")
+    .getElementsByTagName("tbody")[0];
+
+  for (let user of users) {
+    let newRow = tBodyRef.insertRow();
+    for (let key in user) {
+      let newCell = newRow.insertCell();
+      let newText = document.createTextNode(user[key]);
+      newCell.appendChild(newText);
+      console.log(key);
+    }
+    console.log("user = ", user);
+  }
+}
+
+function addPostsToTable() {
+  let posts = JSON.parse(localStorage.getItem("posts"));
+  let tBodyRef = document
+    .getElementById("tablePosts")
+    .getElementsByTagName("tbody")[0];
+
+  for (let post of posts) {
+    let newRow = tBodyRef.insertRow();
+    for (let key in post) {
+      let newCell = newRow.insertCell();
+      let newText = document.createTextNode(post[key]);
+      newCell.appendChild(newText);
+      console.log(key);
+    }
+  }
 }
 
 document.getElementById("getData").onclick = async function () {
