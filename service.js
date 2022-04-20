@@ -28,8 +28,6 @@ async function getDataFromAPI() {
   localStorage.setItem("posts", JSON.stringify(posts));
 
   addUsersToTable();
-  //   addPostsToTableByUserId(2);
-  //   addPostsToTable();
 }
 
 function addUsersToTable() {
@@ -46,16 +44,12 @@ function addUsersToTable() {
         let newCell = newRow.insertCell();
         let newText = document.createTextNode(user[key]);
         newCell.appendChild(newText);
-        // console.log(key);
       }
     }
-    // console.log("user = ", user);
   }
 }
 
 function addPostsToTableByUserId(user_id) {
-  console.log("user input = ", user_id);
-  console.log("user input = ", Object.getPrototypeOf(user_id));
   let posts = JSON.parse(localStorage.getItem("posts"));
   let tBodyRef = document
     .getElementById("tablePosts")
@@ -72,36 +66,14 @@ function addPostsToTableByUserId(user_id) {
           let newCell = newRow.insertCell();
           let newText = document.createTextNode(post[key]);
           newCell.appendChild(newText);
-          // console.log(key);
         }
       }
     }
   }
 }
 
-function addPostsToTable() {
-  let posts = JSON.parse(localStorage.getItem("posts"));
-  let tBodyRef = document
-    .getElementById("tablePosts")
-    .getElementsByTagName("tbody")[0];
-
-  for (let post of posts) {
-    let newRow = tBodyRef.insertRow();
-    for (let key in post) {
-      let newCell = newRow.insertCell();
-      let newText = document.createTextNode(post[key]);
-      newCell.appendChild(newText);
-      //   console.log(key);
-    }
-  }
-}
-
 window.onload = async function () {
   await getDataFromAPI();
-
-  document.getElementById("getData").onclick = async function () {
-    await getDataFromAPI();
-  };
 
   const users = document
     .getElementById("tableUsers")
@@ -114,8 +86,6 @@ window.onload = async function () {
       function (event) {
         const user_id = user.childNodes[0].textContent;
         addPostsToTableByUserId(user_id);
-        console.log("tr clicked");
-        console.log(user.childNodes[0].textContent);
       },
       false
     );
