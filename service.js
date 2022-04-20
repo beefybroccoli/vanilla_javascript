@@ -66,11 +66,14 @@ function addPostsToTableByUserId(user_id) {
   for (let post of posts) {
     if (String(post["userId"]) === user_id) {
       let newRow = tBodyRef.insertRow();
+      const keys = ["id", "title", "body"];
       for (let key in post) {
-        let newCell = newRow.insertCell();
-        let newText = document.createTextNode(post[key]);
-        newCell.appendChild(newText);
-        // console.log(key);
+        if (keys.includes(key)) {
+          let newCell = newRow.insertCell();
+          let newText = document.createTextNode(post[key]);
+          newCell.appendChild(newText);
+          // console.log(key);
+        }
       }
     }
   }
