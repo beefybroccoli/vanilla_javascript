@@ -54,13 +54,17 @@ function addUsersToTable() {
 }
 
 function addPostsToTableByUserId(user_id) {
+  console.log("user input = ", user_id);
+  console.log("user input = ", Object.getPrototypeOf(user_id));
   let posts = JSON.parse(localStorage.getItem("posts"));
   let tBodyRef = document
     .getElementById("tablePosts")
     .getElementsByTagName("tbody")[0];
 
+  tBodyRef.replaceChildren();
+
   for (let post of posts) {
-    if (post["userId"] === user_id) {
+    if (String(post["userId"]) === user_id) {
       let newRow = tBodyRef.insertRow();
       for (let key in post) {
         let newCell = newRow.insertCell();
@@ -96,26 +100,6 @@ window.onload = async function () {
     await getDataFromAPI();
   };
 
-  //   const tableUsers = document.getElementById("tableUsers");
-  //   tableUsers.addEventListener(
-  //     "click",
-  //     function () {
-  //       console.log("tableUsers clicked");
-  //     },
-  //     false
-  //   );
-
-  //   document
-  //     .getElementById("tableUsers")
-  //     .getElementsByTagName("tbody")[0]
-  //     .addEventListener(
-  //       "click",
-  //       function (event) {
-  //         console.log("tbody clicked");
-  //       },
-  //       false
-  //     );
-
   const users = document
     .getElementById("tableUsers")
     .getElementsByTagName("tbody")[0]
@@ -125,36 +109,12 @@ window.onload = async function () {
     user.addEventListener(
       "click",
       function (event) {
+        const user_id = user.childNodes[0].textContent;
+        addPostsToTableByUserId(user_id);
         console.log("tr clicked");
-        console.log(event.document);
-        console.log(event["path"]);
-        console.log(event["path"][0]);
+        console.log(user.childNodes[0].textContent);
       },
       false
     );
   }
 };
-
-// tableUsers.onClick(() => {
-//   console.log("tableUers clicked");
-// });
-
-// document
-//   .getElementById("tableUsers")
-//   .getElementsByTagName("tbody")[0]
-//   .addEventListener("click", function () {
-//     console.log("tableUsers clicked");
-//   });
-//   console.log("tableUsers clicked");
-//   //   console.log("event = ", event);
-// };
-
-// document
-//   .getElementById("tableUsers")
-//   .getElementsByTagName("tbody")[0]
-//   .getElementsByTagName("tr")
-//   .forEach((item) => {
-//     item.onclick = function () {
-//       console.log("a user was clicked");
-//     };
-//   });
